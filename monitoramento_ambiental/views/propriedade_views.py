@@ -4,8 +4,11 @@ from ..models.historico_busca import HistoricoBusca  # Importe o modelo de hist√
 from ..serializers.propriedade_serializer import PropriedadeSerializer
 from ..serializers.historico_busca_serializer import HistoricoBuscaSerializer  # Importe o serializer do hist√≥rico de buscas
 from django.utils import timezone
+from rest_framework.permissions import IsAuthenticated
+
 
 class PropriedadeViewSet(viewsets.ModelViewSet):
+    permission_classes = [IsAuthenticated]
     serializer_class = PropriedadeSerializer
 
     def get_queryset(self):
