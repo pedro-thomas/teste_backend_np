@@ -9,3 +9,6 @@ class Vinculo(models.Model):
 
     class Meta: 
         db_table = 'vinculos'
+
+    def __str__(self):
+        return f'{self.idPropriedade.nomePropriedade} - {self.idProdutor.nomeProdutor}'

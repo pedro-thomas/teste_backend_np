@@ -8,3 +8,6 @@ class Produtor(models.Model):
 
     class Meta: 
         db_table = 'produtores'
+
+    def __str__(self):
+        return self.nomeProdutor
