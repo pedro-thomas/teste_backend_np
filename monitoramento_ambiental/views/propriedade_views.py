@@ -1,8 +1,8 @@
 from rest_framework import viewsets
 from ..models.propriedade import Propriedade
-from ..models.historico_busca import HistoricoBusca  # Importe o modelo de histórico de buscas
+from ..models.historico_busca import HistoricoBusca 
 from ..serializers.propriedade_serializer import PropriedadeSerializer
-from ..serializers.historico_busca_serializer import HistoricoBuscaSerializer  # Importe o serializer do histórico de buscas
+from ..serializers.historico_busca_serializer import HistoricoBuscaSerializer
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
 
