@@ -5,7 +5,9 @@ from ..serializers.propriedade_serializer import PropriedadeSerializer
 from ..serializers.historico_busca_serializer import HistoricoBuscaSerializer
 from django.utils import timezone
 from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.response import Response
+from rest_framework import status
+from rest_framework import generics
 
 class PropriedadeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -28,3 +30,17 @@ class PropriedadeViewSet(viewsets.ModelViewSet):
     def serialize_queryset(self, queryset):
         serializer = PropriedadeSerializer(queryset, many=True)
         return serializer.data
+
+class PropriedadeUpdateView(generics.UpdateAPIView):
+    queryset = Propriedade.objects.all()
+    serializer_class = PropriedadeSerializer
+
+    def patch(self, request, *args, **kwargs):
+        propriedade_id = kwargs.get('pk')
+        try:
+            propriedade = Propriedade.objects.get(pk=propriedade_id)
+            propriedade.liberado = request.data.get('liberado', propriedade.liberado)
+            propriedade.save()
+            return Response({"status": "success", "data": PropriedadeSerializer(propriedade).data}, status=status.HTTP_200_OK)
+        except Propriedade.DoesNotExist:
+            return Response({"status": "error", "message": "Propriedade não encontrada."}, status=status.HTTP_404_NOT_FOUND)

@@ -10,6 +10,7 @@ from .views import (
     HistoricoBuscaList,
 )
 from .views.historico_busca_views import HistoricoBuscaDelete
+from .views.propriedade_views import PropriedadeUpdateView
 
 router = DefaultRouter()
 router.register(r'produtores', ProdutorViewSet)
@@ -23,4 +24,5 @@ urlpatterns = [
     path('historico/<int:pk>/delete/', HistoricoBuscaDelete.as_view(), name='historico_buscas_delete'),
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('propriedades/<int:pk>/update_monitoramento/', PropriedadeUpdateView.as_view(), name='update_monitoramento'),
 ]

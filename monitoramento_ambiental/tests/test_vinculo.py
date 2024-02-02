@@ -67,5 +67,5 @@ class VinculoViewSetTest(APITestCase):
         url = reverse('vinculo-detail', args=[self.vinculo.idVinculo])
         response = self.client.get(url)
         self.assertEqual(response.status_code, status.HTTP_200_OK)
-        self.assertEqual(response.data['idPropriedade'], self.propriedade.idPropriedade)
-        self.assertEqual(response.data['idProdutor'], self.produtor.idProdutor)
+        self.assertEqual(response.data['idPropriedade']['idPropriedade'], self.propriedade.idPropriedade)
+        self.assertEqual(response.data['idProdutor']['idProdutor'], self.produtor.idProdutor)
