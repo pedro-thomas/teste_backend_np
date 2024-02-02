@@ -1,4 +1,4 @@
-from .protudor_serializer import ProdutorSerializer
+from .produtor_serializer import ProdutorSerializer
 from .propriedade_serializer import PropriedadeSerializer
 from .vinculo_serializer import VinculoSerializer
 from .analise_automatica_serializer import AnaliseAutomaticaSerializer

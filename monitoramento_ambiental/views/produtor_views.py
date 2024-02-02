@@ -1,6 +1,6 @@
 from rest_framework import viewsets
 from ..models.produtor import Produtor
-from ..serializers.protudor_serializer import ProdutorSerializer
+from ..serializers.produtor_serializer import ProdutorSerializer
 from rest_framework.permissions import IsAuthenticated
 
 

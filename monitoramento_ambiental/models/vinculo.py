@@ -11,4 +11,6 @@ class Vinculo(models.Model):
         db_table = 'vinculos'
 
     def __str__(self):
-        return f'{self.idPropriedade.nomePropriedade} - {self.idProdutor.nomeProdutor}'
+        nome_propriedade = self.idPropriedade.nomePropriedade if self.idPropriedade and self.idPropriedade.nomePropriedade else 'Propriedade Desconhecida'
+        nome_produtor = self.idProdutor.nomeProdutor if self.idProdutor and self.idProdutor.nomeProdutor else 'Produtor Desconhecido'
+        return f'{nome_propriedade} - {nome_produtor}'
