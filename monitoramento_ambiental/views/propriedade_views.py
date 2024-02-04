@@ -9,7 +9,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
-from django.shortcuts import get_object_or_404, render
+from django.shortcuts import get_object_or_404, render, redirect
+from monitoramento_ambiental.forms.propriedade_form import PropriedadeForm
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+
 
 
 class PropriedadeViewSet(viewsets.ModelViewSet):
@@ -55,3 +59,16 @@ def listar_propriedades(request):
 def detalhes_propriedade(request, id):
     propriedade = get_object_or_404(Propriedade, pk=id)
     return render(request, '../templates/propriedades/detalhes_propriedade.html', {'propriedade': propriedade})
+
+
+@login_required
+def editar_propriedade(request, pk):
+    propriedade = get_object_or_404(Propriedade, pk=pk)
+    if request.method == "POST":
+        form = PropriedadeForm(request.POST, instance=propriedade)
+        if form.is_valid():
+            form.save()
+            return redirect('detalhes_propriedade', pk=propriedade.pk)
+    else:
+        form = PropriedadeForm(instance=propriedade)
+    return render(request, 'propriedades/editar_propriedade.html', {'form': form})
