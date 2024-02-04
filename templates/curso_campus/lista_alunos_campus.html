@@ -1,0 +1,57 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Lista de alunos{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Alunos do Campus {{ campus_nome }}</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Data de Nascimento</th>
+                            <th>Idade</th>
+                            <th>Número de matricula</th>
+                            <th>Curso</th>
+                            <th>Vinculado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for aluno in object_list %}
+                            <tr>                                    
+                                
+                                <td>
+                                    <a href="{% url 'aluno_detalhes' aluno.pk %}">{{ aluno.nome }}</a>
+                                </td>
+                                <td>{{ aluno.cpf }}</td>
+                                <td>{{ aluno.data_nascimento }}</td>
+                                <td>{{ aluno.idade }} Anos</td>
+                                <td>{{ aluno.matricula }}</td>
+                                <td>{{ aluno.curso.nome }}</td>
+                                <td>
+                                    {% if aluno.status %}
+                                        <span class="icon text-success">
+                                            <i class="fas fa-circle"></i>
+                                            {{ aluno.get_situacao_display }}
+                                        </span>
+                                    {% else %}
+                                        <span class="icon text-danger">
+                                            <i class="fas fa-circle"></i>
+                                            {{ aluno.get_situacao_display }}
+                                        </span>
+                                    {% endif %}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

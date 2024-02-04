@@ -1,0 +1,78 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Alunos por curso{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-3">
+        <label for="campusSelect">Escolha o Campus:</label>
+        <select id="campusSelect" class="form-control">
+            {% for campus in campus_list %}
+            <option value="{{ campus.id }}" {% if campus.id == campus_id %} selected {% endif %}>{{ campus.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label for="graphTypeSelect">Tipo de Gráfico:</label>
+        <select id="graphTypeSelect" class="form-control">
+            <option value="bar">Barra</option>
+            <option value="pie">Pizza</option>
+        </select>
+    </div>
+
+    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+        <canvas id="alunosPorCursoChart"></canvas>
+    </div>
+    <div id="chartDetails" class="mt-3"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dadosGrafico = {{ dados_grafico | safe }};
+    const campusSelect = document.getElementById('campusSelect');
+    const graphTypeSelect = document.getElementById('graphTypeSelect');
+    const ctx = document.getElementById('alunosPorCursoChart').getContext('2d');
+    let myChart = createChart(dadosGrafico, graphTypeSelect.value);
+
+    campusSelect.addEventListener('change', function() {
+        const campusId = campusSelect.value;
+        window.location.href = `/relatorios/alunos_por_curso/${campusId}`;
+    });
+
+    graphTypeSelect.addEventListener('change', function() {
+        myChart.destroy();
+        myChart = createChart(dadosGrafico, graphTypeSelect.value);
+    });
+
+    function createChart(data, chartType) {
+        const cursoNomes = data.map(item => item.nome);
+        const cursoAlunos = data.map(item => item.total_alunos);
+
+        const detailsElement = document.getElementById('chartDetails');
+        detailsElement.innerHTML = `Total de cursos: ${cursoNomes.length}<br>Total de alunos: ${cursoAlunos.reduce((sum, current) => sum + current, 0)}`;
+
+        return new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: cursoNomes,
+                datasets: [{
+                    label: 'Alunos por Curso',
+                    data: cursoAlunos,
+                    backgroundColor: cursoNomes.map((_, i) => `rgba(${i * 50 % 255}, ${i * 80 % 255}, ${i * 110 % 255}, 0.5)`),
+                    borderColor: cursoNomes.map((_, i) => `rgba(${i * 50 % 255}, ${i * 80 % 255}, ${i * 110 % 255}, 1)`),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: chartType === 'bar' ? { y: { beginAtZero: true } } : {},
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+});
+</script>
+{% endblock %}

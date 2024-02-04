@@ -1,0 +1,37 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Lista de cursos{% endblock %}
+
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Cursos do Campus {{ campus_nome }}</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Curso</th>
+                            <th>Alunos</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for curso in cursos %}
+                        <tr>
+                            <td>{{ curso.nome }}</td>
+                            <td>
+                                <a href="{% url 'lista_alunos_curso' curso.id %}">
+                                    {{ curso.aluno_set.count }}
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

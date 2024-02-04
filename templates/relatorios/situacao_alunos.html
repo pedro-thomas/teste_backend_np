@@ -1,0 +1,62 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Situação dos alunos{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <div class="mb-3">
+        <label for="graphTypeSelect">Tipo de Gráfico:</label>
+        <select id="graphTypeSelect" class="form-control">
+            <option value="bar">Barra</option>
+            <option value="pie">Pizza</option>
+        </select>
+    </div>
+
+    <div class="chart-container" style="position: relative; height:40vh; width:80vw">
+        <canvas id="situacaoAlunoChart"></canvas>
+    </div>
+    <div id="chartDetailsSituacao" class="mt-3"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const dadosGrafico = {{ dados_grafico | safe }};
+    const graphTypeSelect = document.getElementById('graphTypeSelect');
+    const ctx = document.getElementById('situacaoAlunoChart').getContext('2d');
+    let myChart = createChart(dadosGrafico, graphTypeSelect.value);
+
+    graphTypeSelect.addEventListener('change', function() {
+        myChart.destroy();
+        myChart = createChart(dadosGrafico, graphTypeSelect.value);
+    });
+
+    function createChart(data, chartType) {
+        const situacaoNomes = data.map(item => item.situacao);
+        const situacaoTotais = data.map(item => item.total);
+
+        const detailsElement = document.getElementById('chartDetailsSituacao');
+        detailsElement.innerHTML = `Total de situações: ${situacaoNomes.length}<br>Total de alunos: ${situacaoTotais.reduce((sum, current) => sum + current, 0)}`;
+
+        return new Chart(ctx, {
+            type: chartType,
+            data: {
+                labels: situacaoNomes,
+                datasets: [{
+                    label: 'Situação dos Alunos',
+                    data: situacaoTotais,
+                    backgroundColor: situacaoNomes.map((_, i) => `rgba(${i * 50 % 54}, ${i * 80 % 162}, ${i * 110 % 235}, 0.5)`),
+                    borderColor: situacaoNomes.map((_, i) => `rgba(${i * 50 % 54}, ${i * 80 % 162}, ${i * 110 % 235}, 1)`),
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: chartType === 'bar' ? { y: { beginAtZero: true } } : {},
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    }
+});
+</script>
+{% endblock %}
