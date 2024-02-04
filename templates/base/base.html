@@ -20,53 +20,35 @@
 <body id="page-top">
     <div id="wrapper">
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" >
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{% url 'listar_propriedades' %}">
                 <div class="sidebar-brand-icon">
-                    <i class="fas fa-globe" style="color: #ffffff;"></i>     
-                   </div>
+                    <i class="fas fa-globe" style="color: #ffffff;"></i>
+                </div>
                 <div class="sidebar-brand-text mx-3">NICEPLANET</div>
             </a>
-
+        
             <hr class="sidebar-divider my-0">
-
+        
             <li class="nav-item">
-                <a class="nav-link" >
-                    <i class="fas fa-user-plus fa-scroll"></i>
-                    <span>Cadastrar novo aluno</span>
+                <a class="nav-link" href="{% url 'listar_propriedades' %}">
+                    <i class="fas fa-regular fa-map"></i>
+                    <span>Listar Propriedades</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" >
-                    <i class="fas fa-list-ul fa"></i>
-                    <span>Lista de alunos</span>
+                <a class="nav-link" href="{% url 'listar_produtores' %}">
+                    <i class="fas fa-user"></i>
+                    <span>Listar Produtores</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" >
-                    <i class="fas fa-fw fa-building"></i>
-                    <span>Campi</span>
+                <a class="nav-link" href="{% url 'listar_historico_busca' %}">
+                    <i class="fas fa-scroll"></i>
+                    <span>Histórico de Busca</span>
                 </a>
-            </li>
-
-            <hr class="sidebar-divider d-none d-md-block">
-
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseRelatorios"
-                    aria-expanded="true" aria-controls="collapseRelatorios">
-                    <i class="fas fa-fw fa-chart-bar"></i>
-                    <span>Gráficos</span>
-                </a>
-                <div id="collapseRelatorios" class="collapse" aria-labelledby="headingRelatorios" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Relatórios Disponíveis:</h6>
-                        <a class="collapse-item" >Alunos por Curso</a>
-                        <a class="collapse-item" >Alunos por Campus</a>
-                        <a class="collapse-item" >Situação dos Alunos</a>
-                        <a class="collapse-item" >Formas de Ingresso</a>
-                    </div>
-                </div>
             </li>
         </ul>
+        
 
         <div id="content-wrapper" class="d-flex flex-column">
             <div id="content">
@@ -75,17 +57,16 @@
                         <i class="fa fa-bars"></i>
                     </button>
 
-                    <form method="get" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                    <form method="get" action="{% url 'buscar_por_sicar' %}" class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
                         <div class="input-group">
-                            <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Pesquisar propriedade (sicar)" 
-                                aria-label="Search" aria-describedby="basic-addon2">
+                            <input type="text" name="q" class="form-control bg-light border-0 small" placeholder="Pesquisar propriedade (sicar)" aria-label="Search">
                             <div class="input-group-append">
                                 <button class="btn btn-primary" type="submit">
                                     <i class="fas fa-search fa-sm"></i>
                                 </button>
                             </div>
                         </div>
-                    </form>
+                    </form>              
 
                     <ul class="navbar-nav ml-auto">
                     </ul>

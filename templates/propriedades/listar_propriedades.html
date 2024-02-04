@@ -24,7 +24,7 @@
                     <tbody>
                         {% for propriedade in propriedades %}
                         <tr>
-                            <td>{{ propriedade.nomePropriedade }}</td>
+                            <td><a href="{% url 'detalhes_propriedade' propriedade.pk %}">{{ propriedade.nomePropriedade }}</a></tdtd>
                             <td>{{ propriedade.numeroCar }}</td>
                             <td>{{ propriedade.uf }}</td>
                             <td>{{ propriedade.municipio }}</td>

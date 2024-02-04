@@ -10,7 +10,7 @@ def login_page(request):
         
         if user is not None:
             login(request, user)
-            return redirect('base_page')  # Redireciona para a página de login para teste
+            return redirect('listar_propriedades') 
         else:
             messages.error(request, 'Nome de usuário ou senha incorretos')
     

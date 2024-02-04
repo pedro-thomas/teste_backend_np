@@ -13,6 +13,7 @@ from django.shortcuts import get_object_or_404, render, redirect
 from monitoramento_ambiental.forms.propriedade_form import PropriedadeForm
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 
 
@@ -60,7 +61,6 @@ def detalhes_propriedade(request, id):
     propriedade = get_object_or_404(Propriedade, pk=id)
     return render(request, '../templates/propriedades/detalhes_propriedade.html', {'propriedade': propriedade})
 
-
 @login_required
 def editar_propriedade(request, pk):
     propriedade = get_object_or_404(Propriedade, pk=pk)
@@ -72,3 +72,26 @@ def editar_propriedade(request, pk):
     else:
         form = PropriedadeForm(instance=propriedade)
     return render(request, 'propriedades/editar_propriedade.html', {'form': form})
+
+@login_required
+def buscar_por_sicar(request):
+    numero_car = request.GET.get('q')  # Alterado para capturar o parâmetro 'q' da URL
+    if numero_car:
+        propriedades = Propriedade.objects.filter(numeroCar=numero_car)
+        if propriedades.exists():
+            propriedade = propriedades.first()
+            HistoricoBusca.objects.create(
+                termo_busca=numero_car,
+                data_hora_busca=timezone.now(),
+                resultado_busca=f"Propriedade {propriedade.nomePropriedade} encontrada."
+            )
+            return HttpResponseRedirect(reverse('detalhes_propriedade', args=[propriedade.pk]))
+        else:
+            HistoricoBusca.objects.create(
+                termo_busca=numero_car,
+                data_hora_busca=timezone.now(),
+                resultado_busca="Nenhuma propriedade encontrada."
+            )
+            return redirect('listar_propriedades')
+    else:
+        return redirect('listar_propriedades')
