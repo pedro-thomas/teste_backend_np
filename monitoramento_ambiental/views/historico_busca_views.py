@@ -5,6 +5,11 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.http import Http404
+from django.views.generic import ListView
+from django.contrib.auth.decorators import login_required
+from django.urls import reverse
+from django.shortcuts import redirect, get_object_or_404
+
 
 class HistoricoBuscaList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
@@ -24,3 +29,14 @@ class HistoricoBuscaDelete(APIView):
         historico = self.get_object(pk)
         historico.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+class HistoricoBuscaListView(ListView):
+    model = HistoricoBusca
+    template_name = '../templates/historico_busca/listar_historico_busca.html'
+    context_object_name = 'historicos'
+
+@login_required
+def apagar_historico_busca(request, id):
+    historico = get_object_or_404(HistoricoBusca, id=id)
+    historico.delete()
+    return redirect('listar_historico_busca')

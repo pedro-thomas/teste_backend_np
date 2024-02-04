@@ -1,0 +1,38 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Histórico de Buscas{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Histórico de Buscas</h1>
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Buscas Realizadas</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>Termo de Busca</th>
+                            <th>Data e Hora</th>
+                            <th>Ações</th> <!-- Modificado -->
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for historico in historicos %}
+                        <tr>
+                            <td>{{ historico.termo_busca }}</td>
+                            <td>{{ historico.data_hora_busca }}</td>
+                            <td>
+                                <a href="{% url 'apagar_historico_busca' historico.id %}" class="btn btn-danger btn-sm">Apagar</a> <!-- Botão Adicionado -->
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
