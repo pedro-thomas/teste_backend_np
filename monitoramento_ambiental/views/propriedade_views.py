@@ -4,10 +4,13 @@ from ..models.historico_busca import HistoricoBusca
 from ..serializers.propriedade_serializer import PropriedadeSerializer
 from ..serializers.historico_busca_serializer import HistoricoBuscaSerializer
 from django.utils import timezone
+from django.shortcuts import render
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework import generics
+from django.shortcuts import get_object_or_404, render
+
 
 class PropriedadeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
@@ -44,3 +47,11 @@ class PropriedadeUpdateView(generics.UpdateAPIView):
             return Response({"status": "success", "data": PropriedadeSerializer(propriedade).data}, status=status.HTTP_200_OK)
         except Propriedade.DoesNotExist:
             return Response({"status": "error", "message": "Propriedade não encontrada."}, status=status.HTTP_404_NOT_FOUND)
+        
+def listar_propriedades(request):
+    propriedades = Propriedade.objects.all()
+    return render(request, '../templates/propriedades/listar_propriedades.html', {'propriedades': propriedades})
+
+def detalhes_propriedade(request, id):
+    propriedade = get_object_or_404(Propriedade, pk=id)
+    return render(request, '../templates/propriedades/detalhes_propriedade.html', {'propriedade': propriedade})

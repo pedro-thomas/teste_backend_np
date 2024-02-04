@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %}
+
+{% block title %}Propriedade{% endblock %}
+
+{% block content %}
+<div class="container-fluid">
+    <h1 class="h3 mb-4 text-gray-800">Detalhes da Propriedade</h1>
+
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Informações da Propriedade</h6>
+        </div>
+
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <p><strong>Nome da Propriedade:</strong> {{ propriedade.nomePropriedade }}</p>
+                    <p><strong>Número do CAR:</strong> {{ propriedade.numeroCar }}</p>
+                    <p><strong>UF:</strong> {{ propriedade.uf }}</p>
+                    <p><strong>Município:</strong> {{ propriedade.municipio }}</p>
+                    <p><strong>País:</strong> {{ propriedade.pais }}</p>
+                    <p><strong>Status:</strong>
+                        {% if propriedade.status == 1 %}
+                            <span class="text-success"><i class="fas fa-check"></i> Ativo</span>
+                        {% elif propriedade.status == 0 %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Inativo</span>
+                        {% endif %}
+                    </p>
+                    <p><strong>Liberado:</strong>
+                        {% if propriedade.liberado == 1 %}
+                            <span class="text-success"><i class="fas fa-check"></i> Liberado</span>
+                        {% elif propriedade.liberado == 0 %}
+                            <span class="text-danger"><i class="fas fa-times"></i> Bloqueado</span>
+                        {% elif propriedade.liberado == 2 %}
+                            <span class="text-warning"><i class="fas fa-exclamation-triangle"></i> Alerta</span>
+                        {% endif %}
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

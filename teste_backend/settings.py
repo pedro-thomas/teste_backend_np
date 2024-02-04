@@ -47,6 +47,8 @@ INSTALLED_APPS = [
     'usuarios',
 ]
 
+LOGIN_URL = 'login'
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication', 
@@ -72,7 +74,7 @@ ROOT_URLCONF = 'teste_backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Adicione esta linha
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
