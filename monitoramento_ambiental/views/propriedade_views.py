@@ -16,7 +16,6 @@ from django.urls import reverse
 from django.http import HttpResponseRedirect
 
 
-
 class PropriedadeViewSet(viewsets.ModelViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = PropriedadeSerializer
@@ -53,10 +52,12 @@ class PropriedadeUpdateView(generics.UpdateAPIView):
         except Propriedade.DoesNotExist:
             return Response({"status": "error", "message": "Propriedade não encontrada."}, status=status.HTTP_404_NOT_FOUND)
         
+@login_required
 def listar_propriedades(request):
     propriedades = Propriedade.objects.all()
     return render(request, '../templates/propriedades/listar_propriedades.html', {'propriedades': propriedades})
 
+@login_required
 def detalhes_propriedade(request, id):
     propriedade = get_object_or_404(Propriedade, pk=id)
     return render(request, '../templates/propriedades/detalhes_propriedade.html', {'propriedade': propriedade})
@@ -75,7 +76,7 @@ def editar_propriedade(request, pk):
 
 @login_required
 def buscar_por_sicar(request):
-    numero_car = request.GET.get('q')  # Alterado para capturar o parâmetro 'q' da URL
+    numero_car = request.GET.get('q').strip()  # Alterado para capturar o parâmetro 'q' da URL
     if numero_car:
         propriedades = Propriedade.objects.filter(numeroCar=numero_car)
         if propriedades.exists():

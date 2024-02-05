@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'usuarios',
 ]
 
-LOGIN_URL = 'login'
+LOGIN_URL = 'login_page'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [

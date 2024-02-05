@@ -13,3 +13,8 @@ class PropriedadeForm(forms.ModelForm):
     class Meta:
         model = Propriedade
         fields = ['nomePropriedade', 'numeroCar', 'uf', 'municipio', 'pais', 'status', 'liberado']
+   
+    def __init__(self, *args, **kwargs):
+        super(PropriedadeForm, self).__init__(*args, **kwargs)
+        for field_name, field in self.fields.items():
+            field.widget.attrs['class'] = 'form-control'
