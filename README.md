@@ -6,9 +6,9 @@ Este projeto é um sistema de gestão de propriedades desenvolvido com Django e 
 
 ### Principais Funcionalidades
 
-- Cadastro e edição de propriedades.
+- Visualização e edição de propriedades.
 - Listagem de propriedades com opção de detalhamento.
-- Cadastro e listagem de produtores.
+- Listagem de produtores.
 - Registro e listagem de histórico de buscas por número do CAR.
 - Autenticação de usuários com sistema de login e logout.
 
@@ -40,10 +40,8 @@ source venv/bin/activate  # No Windows use `venv\Scripts\activate`
 3. Instale as dependências do projeto:
 pip install -r requirements.txt
 
-4. Configure o banco de dados MySQL no settings.py do projeto:
+4. Configure o banco de dados MySQL no settings.py do projeto (teste_backend):
 
-python
-Copy code
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
