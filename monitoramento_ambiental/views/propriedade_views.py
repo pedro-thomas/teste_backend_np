@@ -69,7 +69,7 @@ def editar_propriedade(request, pk):
         form = PropriedadeForm(request.POST, instance=propriedade)
         if form.is_valid():
             form.save()
-            return redirect('detalhes_propriedade', pk=propriedade.pk)
+            return redirect('detalhes_propriedade', id=propriedade.pk)
     else:
         form = PropriedadeForm(instance=propriedade)
     return render(request, 'propriedades/editar_propriedade.html', {'form': form})
